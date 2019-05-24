@@ -3,7 +3,7 @@ import scala.sys.process._
 lazy val branch  = ("git branch".lineStream_!).find{_.head == '*'}.map{_.drop(2)}.getOrElse("")
 lazy val release = (branch == "master" || branch.startsWith("release"))
 lazy val commonSettings = Seq(
-  organization := "com.kidsna",
+  organization := "com.ponsea",
   scalaVersion := "2.12.8",
   resolvers ++= Seq(
     "Typesafe Releases"  at "http://repo.typesafe.com/typesafe/releases/",
