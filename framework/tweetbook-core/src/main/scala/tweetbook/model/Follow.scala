@@ -6,8 +6,8 @@ import ixias.model._
 import Follow._
 case class Follow(
   id: Option[Id],
-  followerId: User.Id
-  followeeId: User.Id
+  from: User.Id,
+  to: User.Id,
   updatedAt: LocalDateTime = NOW,
   createdAt: LocalDateTime = NOW
 ) extends EntityModel[Id]
