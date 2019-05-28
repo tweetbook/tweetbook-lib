@@ -8,8 +8,8 @@ case class User(
   id: Option[Id],
   name: String,
   email: String,
-  description: String,
-  iconUrl: String,
+  description: Option[String] = None,
+  iconUrl: Option[String] = None,
   updatedAt: LocalDateTime = NOW,
   createdAt: LocalDateTime = NOW
 ) extends EntityModel[Id]
