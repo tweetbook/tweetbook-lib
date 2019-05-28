@@ -3,17 +3,17 @@ package tweetbook.model
 import java.time.LocalDateTime
 import ixias.model._
 
-import UserSensitiveInfo._
-case class UserSensitiveInfo(
+import UserPassword._
+case class UserPassword(
   id: Option[Id],
   hashedPassword: String,
   updatedAt: LocalDateTime = NOW,
   createdAt: LocalDateTime = NOW
 ) extends EntityModel[Id]
 
-object UserSensitiveInfo {
+object UserPassword {
   type Id = User.Id
-  type WithNoId   = Entity.WithNoId   [Id, UserSensitiveInfo]
-  type EmbeddedId = Entity.EmbeddedId [Id, UserSensitiveInfo]
+  type WithNoId   = Entity.WithNoId   [Id, UserPassword]
+  type EmbeddedId = Entity.EmbeddedId [Id, UserPassword]
 }
 
