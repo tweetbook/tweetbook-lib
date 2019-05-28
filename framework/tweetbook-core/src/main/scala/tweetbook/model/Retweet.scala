@@ -13,9 +13,8 @@ case class Retweet(
 ) extends EntityModel[Id]
 
 object Retweet {
-  val  Id         = the[Identity[Id]]
-  type Id         = Long @@ Retweet
-  type WithNoId   = Entity.WithNoId   [Id, Retweet]
-  type EmbeddedId = Entity.EmbeddedId [Id, Retweet]
+  val Id = the[Identity[Id]]
+  type Id = Long @@ Retweet
+  type WithNoId = Entity.WithNoId[Id, Retweet]
+  type EmbeddedId = Entity.EmbeddedId[Id, Retweet]
 }
-

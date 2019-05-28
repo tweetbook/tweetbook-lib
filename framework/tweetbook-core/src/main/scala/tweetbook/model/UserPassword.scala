@@ -13,7 +13,6 @@ case class UserPassword(
 
 object UserPassword {
   type Id = User.Id
-  type WithNoId   = Entity.WithNoId   [Id, UserPassword]
-  type EmbeddedId = Entity.EmbeddedId [Id, UserPassword]
+  type WithNoId = Entity.WithNoId[Id, UserPassword]
+  type EmbeddedId = Entity.EmbeddedId[Id, UserPassword]
 }
-

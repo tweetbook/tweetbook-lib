@@ -14,9 +14,8 @@ case class DirectMessage(
 ) extends EntityModel[Id]
 
 object DirectMessage {
-  val  Id         = the[Identity[Id]]
-  type Id         = Long @@ Tweet
-  type WithNoId   = Entity.WithNoId   [Id, DirectMessage]
-  type EmbeddedId = Entity.EmbeddedId [Id, DirectMessage]
+  val Id = the[Identity[Id]]
+  type Id = Long @@ Tweet
+  type WithNoId = Entity.WithNoId[Id, DirectMessage]
+  type EmbeddedId = Entity.EmbeddedId[Id, DirectMessage]
 }
-

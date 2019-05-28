@@ -13,9 +13,8 @@ case class Follow(
 ) extends EntityModel[Id]
 
 object Follow {
-  val  Id         = the[Identity[Id]]
-  type Id         = Long @@ Follow
-  type WithNoId   = Entity.WithNoId   [Id, Follow]
-  type EmbeddedId = Entity.EmbeddedId [Id, Follow]
+  val Id = the[Identity[Id]]
+  type Id = Long @@ Follow
+  type WithNoId = Entity.WithNoId[Id, Follow]
+  type EmbeddedId = Entity.EmbeddedId[Id, Follow]
 }
-

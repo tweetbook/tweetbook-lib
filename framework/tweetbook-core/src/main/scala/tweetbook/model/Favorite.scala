@@ -13,9 +13,8 @@ case class Favorite(
 ) extends EntityModel[Id]
 
 object Favorite {
-  val  Id = the[Identity[Id]]
+  val Id = the[Identity[Id]]
   type Id = Long @@ Favorite
-  type WithNoId   = Entity.WithNoId   [Id, Favorite]
-  type EmbeddedId = Entity.EmbeddedId [Id, Favorite]
+  type WithNoId = Entity.WithNoId[Id, Favorite]
+  type EmbeddedId = Entity.EmbeddedId[Id, Favorite]
 }
-
