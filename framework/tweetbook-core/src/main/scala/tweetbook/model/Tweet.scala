@@ -3,12 +3,13 @@ package tweetbook.model
 import java.time.LocalDateTime
 import ixias.model._
 
+// ツイート
 import Tweet._
 case class Tweet(
-    id: Option[Id],
-    body: String,
-    authorId: User.Id,
-    replyTo: Option[Id] = None,
+    id:        Option[Id],
+    authorId:  User.Id,             // ツイートしたユーザーID
+    replyTo:   Option[Id] = None,   // リプライ先のツイートID (リプライの場合のみ)
+    content:   String,              // ツイートの内容
     updatedAt: LocalDateTime = NOW,
     createdAt: LocalDateTime = NOW
 ) extends EntityModel[Id]

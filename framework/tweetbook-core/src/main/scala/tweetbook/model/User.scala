@@ -3,13 +3,14 @@ package tweetbook.model
 import java.time.LocalDateTime
 import ixias.model._
 
+// ユーザー
 import User._
 case class User(
-  id: Option[Id],
-  name: String,
-  email: String,
-  description: Option[String] = None,
-  iconUrl: Option[String] = None,
+  id:          Option[Id],
+  name:        String,                // ユーザー名
+  email:       String,                // Emailアドレス
+  description: Option[String] = None, // プロフィール文
+  iconUrl:     Option[String] = None, // アイコンのURL
   updatedAt: LocalDateTime = NOW,
   createdAt: LocalDateTime = NOW
 ) extends EntityModel[Id]

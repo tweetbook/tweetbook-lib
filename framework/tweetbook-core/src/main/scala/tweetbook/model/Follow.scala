@@ -3,11 +3,12 @@ package tweetbook.model
 import java.time.LocalDateTime
 import ixias.model._
 
+// ユーザーのフォロー・フォロワー関係
 import Follow._
 case class Follow(
-  id: Option[Id],
-  from: User.Id,
-  to: User.Id,
+  id:        Option[Id],
+  from:      User.Id,             // フォローしたユーザーID
+  to:        User.Id,             // フォローされたユーザーID
   updatedAt: LocalDateTime = NOW,
   createdAt: LocalDateTime = NOW
 ) extends EntityModel[Id]

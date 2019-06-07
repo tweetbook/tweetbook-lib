@@ -3,12 +3,13 @@ package tweetbook.model
 import java.time.LocalDateTime
 import ixias.model._
 
+// ユーザー認証時のパスワード
 import UserPassword._
 case class UserPassword(
-  id: Option[Id],
-  hashedPassword: String,
-  updatedAt: LocalDateTime = NOW,
-  createdAt: LocalDateTime = NOW
+  id:             Option[Id],
+  hashedPassword: String,              // ハッシュ化後のパスワード
+  updatedAt:      LocalDateTime = NOW,
+  createdAt:      LocalDateTime = NOW
 ) extends EntityModel[Id]
 
 object UserPassword {

@@ -3,11 +3,12 @@ package tweetbook.model
 import java.time.LocalDateTime
 import ixias.model._
 
+// ツイートへのいいね
 import Favorite._
 case class Favorite(
-  id: Option[Id],
-  tweetId: Tweet.Id,
-  userId: User.Id,
+  id:        Option[Id],
+  tweetId:   Tweet.Id,            // いいねされたツイートID
+  userId:    User.Id,             // いいねしたユーザーID
   updatedAt: LocalDateTime = NOW,
   createdAt: LocalDateTime = NOW
 ) extends EntityModel[Id]
