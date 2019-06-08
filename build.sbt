@@ -31,9 +31,6 @@ lazy val commonSettings = Seq(
     "net.ixias"    %% "ixias"     % "1.1.11",
     "net.ixias"    %% "ixias-aws" % "1.1.11",
 
-    // --[ UnitTest ]-----------------------------------------
-    "org.specs2"     %% "specs2-core"          % "3.9.1"  % Test,
-    "org.specs2"     %% "specs2-matcher-extra" % "3.9.1"  % Test,
     "ch.qos.logback"  % "logback-classic"      % "1.1.3"  % Test,
     "mysql"           % "mysql-connector-java" % "5.1.39" % Test
   ),
@@ -52,8 +49,8 @@ lazy val publisherSettings = Seq(
     val path = if (release) "releases" else "snapshots"
     Some("Nextbeat snapshots" at "s3://maven.nextbeat.net.s3-ap-northeast-1.amazonaws.com/" + path)
   },
-  publishArtifact in (Compile, packageDoc) := false,  // disable publishing the Doc jar
-  publishArtifact in (Compile, packageSrc) := false,  // disable publishing the sources jar
+  publishArtifact in (Compile, packageDoc) := true,  // disable publishing the Doc jar
+  publishArtifact in (Compile, packageSrc) := true,  // disable publishing the sources jar
   releaseProcess := Seq[ReleaseStep](
     checkSnapshotDependencies,
     inquireVersions,
@@ -76,7 +73,7 @@ lazy val libCore = (project in file("framework/tweetbook-core"))
 
 
 lazy val tweetbook = (project in file("."))
-  .settings(name := "tweetbook")
+  .settings(name := "tweetbook-lib")
   .settings(commonSettings:    _*)
   .settings(publisherSettings: _*)
   .aggregate(libCore)
