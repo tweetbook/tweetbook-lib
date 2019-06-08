@@ -1,3 +1,4 @@
+version := "0.1.0-SNAPSHOT"
 
 import scala.sys.process._
 lazy val branch  = ("git branch".lineStream_!).find{_.head == '*'}.map{_.drop(2)}.getOrElse("")
