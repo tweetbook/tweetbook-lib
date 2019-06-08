@@ -33,9 +33,9 @@ case class UserTable[P <: JdbcProfile]()(implicit val driver: P)
     def * = (
       id.?, name, email, description, iconUrl, updatedAt, createdAt
     ) <> (
-      /** The bidirectional mappings : Tuple(table) => Model */
+      /* The bidirectional mappings : Tuple(table) => Model */
       (User.apply _).tupled,
-      /** The bidirectional mappings : Model => Tuple(table) */
+      /* The bidirectional mappings : Model => Tuple(table) */
       (v: TableElementType) => User.unapply(v).map(_.copy(
         _6 = LocalDateTime.now
       ))

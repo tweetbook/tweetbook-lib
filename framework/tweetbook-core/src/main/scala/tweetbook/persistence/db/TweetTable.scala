@@ -32,9 +32,9 @@ case class TweetTable[P <: JdbcProfile]()(implicit val driver: P)
     def * = (
       id.?, authorId, replyTo, content, updatedAt, createdAt,
     ) <> (
-      /** The bidirectional mappings : Tuple(table) => Model */
+      /* The bidirectional mappings : Tuple(table) => Model */
       (Tweet.apply _).tupled,
-      /** The bidirectional mappings : Model => Tuple(table) */
+      /* The bidirectional mappings : Model => Tuple(table) */
       (v: TableElementType) => Tweet.unapply(v).map(_.copy(
         _5 = LocalDateTime.now
       ))

@@ -31,9 +31,9 @@ case class FollowTable[P <: JdbcProfile]()(implicit val driver: P)
     def * = (
       id.?, from, to, updatedAt, createdAt,
     ) <> (
-      /** The bidirectional mappings : Tuple(table) => Model */
+      /* The bidirectional mappings : Tuple(table) => Model */
       (Follow.apply _).tupled,
-      /** The bidirectional mappings : Model => Tuple(table) */
+      /* The bidirectional mappings : Model => Tuple(table) */
       (v: TableElementType) => Follow.unapply(v).map(_.copy(
         _4 = LocalDateTime.now
       ))

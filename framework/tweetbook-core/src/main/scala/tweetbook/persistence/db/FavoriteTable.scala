@@ -31,9 +31,9 @@ case class FavoriteTable[P <: JdbcProfile]()(implicit val driver: P)
     def * = (
       id.?, tweetId, userId, updatedAt, createdAt
     ) <> (
-      /** The bidirectional mappings : Tuple(table) => Model */
+      /* The bidirectional mappings : Tuple(table) => Model */
       (Favorite.apply _).tupled,
-      /** The bidirectional mappings : Model => Tuple(table) */
+      /* The bidirectional mappings : Model => Tuple(table) */
       (v: TableElementType) => Favorite.unapply(v).map(_.copy(
         _4 = LocalDateTime.now
       ))
