@@ -3,7 +3,7 @@ package tweetbook.persistence
 import scala.concurrent.Future
 import slick.jdbc.JdbcProfile
 import ixias.persistence.SlickRepository
-import tweetbook.model.Tweet
+import tweetbook.model.{Tweet, User}
 
 case class TweetRepository[P <: JdbcProfile]()(implicit val driver: P)
     extends SlickRepository[Tweet.Id, Tweet, P]
@@ -15,6 +15,18 @@ case class TweetRepository[P <: JdbcProfile]()(implicit val driver: P)
       .filter(_.id === id)
       .result
       .headOption
+  }
+
+  def getByUserId(userId: User.Id): Future[Seq[EntityEmbeddedId]] = RunDBAction(TweetTable, "slave") { query =>
+    query
+      .filter(_.userId === userId)
+      .result
+  }
+
+  def getByUserIds(userIds: Seq[User.Id]): Future[Seq[EntityEmbeddedId]] = RunDBAction(TweetTable, "slave") { query =>
+    query
+      .filter(_.userId inSet userIds)
+      .result
   }
 
   def add(entity: EntityWithNoId): Future[Id] = RunDBAction(TweetTable) { query =>
