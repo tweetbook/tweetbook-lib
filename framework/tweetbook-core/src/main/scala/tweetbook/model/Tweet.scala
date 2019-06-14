@@ -7,7 +7,7 @@ import ixias.model._
 import Tweet._
 case class Tweet(
     id:        Option[Id],
-    authorId:  User.Id,             // ツイートしたユーザーID
+    userId:    User.Id,             // ツイートしたユーザーID
     replyTo:   Option[Id] = None,   // リプライ先のツイートID (リプライの場合のみ)
     content:   String,              // ツイートの内容
     updatedAt: LocalDateTime = NOW,

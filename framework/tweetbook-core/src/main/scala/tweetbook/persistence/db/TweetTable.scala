@@ -22,7 +22,7 @@ case class TweetTable[P <: JdbcProfile]()(implicit val driver: P)
   class Table(tag: Tag) extends BasicTable(tag, "tweet") {
 
     /* @1 */ def id        = column[Tweet.Id]         ("id",         O.UInt16, O.PrimaryKey, O.AutoInc)
-    /* @2 */ def authorId  = column[User.Id]          ("author_id",  O.UInt16)
+    /* @2 */ def userId    = column[User.Id]          ("user_id",    O.UInt16)
     /* @3 */ def replyTo   = column[Option[Tweet.Id]] ("reply_to",   O.UInt16)
     /* @4 */ def content   = column[String]           ("content",    O.Utf8BinChar255)
     /* @5 */ def updatedAt = column[LocalDateTime]    ("updated_at", O.TsCurrent)
@@ -30,7 +30,7 @@ case class TweetTable[P <: JdbcProfile]()(implicit val driver: P)
 
     // The * projection of the table
     def * = (
-      id.?, authorId, replyTo, content, updatedAt, createdAt,
+      id.?, userId, replyTo, content, updatedAt, createdAt,
     ) <> (
       /* The bidirectional mappings : Tuple(table) => Model */
       (Tweet.apply _).tupled,
