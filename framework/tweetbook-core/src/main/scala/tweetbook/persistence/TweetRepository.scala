@@ -17,13 +17,13 @@ case class TweetRepository[P <: JdbcProfile]()(implicit val driver: P)
       .headOption
   }
 
-  def getByUserId(userId: User.Id): Future[Seq[EntityEmbeddedId]] = RunDBAction(TweetTable, "slave") { query =>
+  def filterByUserId(userId: User.Id): Future[Seq[EntityEmbeddedId]] = RunDBAction(TweetTable, "slave") { query =>
     query
       .filter(_.userId === userId)
       .result
   }
 
-  def getByUserIds(userIds: Seq[User.Id]): Future[Seq[EntityEmbeddedId]] = RunDBAction(TweetTable, "slave") { query =>
+  def filterByUserIds(userIds: Seq[User.Id]): Future[Seq[EntityEmbeddedId]] = RunDBAction(TweetTable, "slave") { query =>
     query
       .filter(_.userId inSet userIds)
       .result
