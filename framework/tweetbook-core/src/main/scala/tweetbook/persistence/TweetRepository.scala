@@ -23,7 +23,7 @@ case class TweetRepository[P <: JdbcProfile]()(implicit val driver: P)
       .result
   }
 
-  def filterByUserIds(userIds: Seq[User.Id]): Future[Seq[EntityEmbeddedId]] = RunDBAction(TweetTable, "slave") { query =>
+  def filterByUserIds(userIds: Set[User.Id]): Future[Seq[EntityEmbeddedId]] = RunDBAction(TweetTable, "slave") { query =>
     query
       .filter(_.userId inSet userIds)
       .result
