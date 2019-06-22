@@ -3,7 +3,7 @@ package tweetbook.persistence
 import scala.concurrent.Future
 import slick.jdbc.JdbcProfile
 import ixias.persistence.SlickRepository
-import tweetbook.model.Follow
+import tweetbook.model.{Follow, User}
 
 case class FollowRepository[P <: JdbcProfile]()(implicit val driver: P)
     extends SlickRepository[Follow.Id, Follow, P]
@@ -16,6 +16,17 @@ case class FollowRepository[P <: JdbcProfile]()(implicit val driver: P)
       .result
       .headOption
   }
+
+  /*
+   * フォローしているユーザーを元にフォロー関係を取得
+   */
+  def filterByFollowerId(userId: User.Id) =
+    RunDBAction(FollowTable, "slave") { query =>
+      query
+        .filter(_.followerId === userId)
+        .result
+    }
+
 
   def add(entity: EntityWithNoId): Future[Id] = RunDBAction(FollowTable) { query =>
     query

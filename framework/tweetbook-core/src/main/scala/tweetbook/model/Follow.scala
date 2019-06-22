@@ -8,11 +8,11 @@ import ixias.model._
  */
 import Follow._
 case class Follow(
-  id:        Option[Id],          // ID
-  from:      User.Id,             // フォローしたユーザーID
-  to:        User.Id,             // フォローされたユーザーID
-  updatedAt: LocalDateTime = NOW, // 最終更新日時
-  createdAt: LocalDateTime = NOW  // 作成日時
+  id:         Option[Id],          // ID
+  followerId: User.Id,             // フォローしたユーザーID
+  followeeId: User.Id,             // フォローされたユーザーID
+  updatedAt:  LocalDateTime = NOW, // 最終更新日時
+  createdAt:  LocalDateTime = NOW  // 作成日時
 ) extends EntityModel[Id]
 
 /*

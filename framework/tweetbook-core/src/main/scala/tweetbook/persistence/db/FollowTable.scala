@@ -21,15 +21,15 @@ case class FollowTable[P <: JdbcProfile]()(implicit val driver: P)
 
   class Table(tag: Tag) extends BasicTable(tag, "follow") {
 
-    /* @1 */ def id        = column[Follow.Id]     ("id",         O.UInt16, O.PrimaryKey, O.AutoInc)
-    /* @2 */ def from      = column[User.Id]       ("from",       O.UInt16)
-    /* @3 */ def to        = column[User.Id]       ("to",         O.UInt16)
-    /* @4 */ def updatedAt = column[LocalDateTime] ("updated_at", O.TsCurrent)
-    /* @5 */ def createdAt = column[LocalDateTime] ("created_at", O.Ts)
+    /* @1 */ def id         = column[Follow.Id]     ("id",          O.UInt16, O.PrimaryKey, O.AutoInc)
+    /* @2 */ def followerId = column[User.Id]       ("follower_id", O.UInt16)
+    /* @3 */ def followeeId = column[User.Id]       ("followee_id", O.UInt16)
+    /* @4 */ def updatedAt  = column[LocalDateTime] ("updated_at",  O.TsCurrent)
+    /* @5 */ def createdAt  = column[LocalDateTime] ("created_at",  O.Ts)
 
     // The * projection of the table
     def * = (
-      id.?, from, to, updatedAt, createdAt,
+      id.?, followerId, followeeId, updatedAt, createdAt,
     ) <> (
       /* The bidirectional mappings : Tuple(table) => Model */
       (Follow.apply _).tupled,
