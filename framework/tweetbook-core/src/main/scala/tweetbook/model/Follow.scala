@@ -3,19 +3,28 @@ package tweetbook.model
 import java.time.LocalDateTime
 import ixias.model._
 
-// ユーザーのフォロー・フォロワー関係
+/*
+ * ユーザーのフォロー・フォロワー関係
+ */
 import Follow._
 case class Follow(
-  id:        Option[Id],
+  id:        Option[Id],          // ID
   from:      User.Id,             // フォローしたユーザーID
   to:        User.Id,             // フォローされたユーザーID
-  updatedAt: LocalDateTime = NOW,
-  createdAt: LocalDateTime = NOW
+  updatedAt: LocalDateTime = NOW, // 最終更新日時
+  createdAt: LocalDateTime = NOW  // 作成日時
 ) extends EntityModel[Id]
 
+/*
+ * コンパニオンオブジェクト
+ */
 object Follow {
-  val Id = the[Identity[Id]]
+  // モデルのID型
   type Id = Long @@ Follow
+  val Id = the[Identity[Id]]
+
+  // ID付与前のモデルの型
   type WithNoId = Entity.WithNoId[Id, Follow]
+  // ID付与後のモデルの型
   type EmbeddedId = Entity.EmbeddedId[Id, Follow]
 }
