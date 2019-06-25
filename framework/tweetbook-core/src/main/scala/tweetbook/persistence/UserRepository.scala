@@ -18,6 +18,17 @@ case class UserRepository[P <: JdbcProfile]()(implicit val driver: P)
         .headOption
     }
 
+  /*
+   * メールアドレスからユーザ情報を取得する
+   */
+  def findByEmail(email: String): Future[Option[EntityEmbeddedId]] =
+    RunDBAction(UserTable, "slave") { query =>
+      query
+        .filter(_.email === email)
+        .result
+        .headOption
+    }
+
   def filterByIds(ids: Traversable[User.Id]): Future[Seq[EntityEmbeddedId]] =
     RunDBAction(UserTable, "slave") { query =>
       query
