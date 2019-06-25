@@ -2,6 +2,9 @@ package tweetbook.persistence.db
 
 import slick.jdbc.JdbcProfile
 
+/*
+ * Slickのテーブル定義をまとめたもの
+ */
 trait SlickResourceProvider[P <: JdbcProfile] extends SlickColumnTypes[P] {
   implicit val driver: P
 

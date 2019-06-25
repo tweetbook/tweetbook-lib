@@ -33,13 +33,13 @@ case class UserPasswordTable[P <: JdbcProfile]()(implicit val driver: P)
     /* @4 */ def updatedAt = column[LocalDateTime]("updated_at", O.TsCurrent)
     /* @5 */ def createdAt = column[LocalDateTime]("created_at", O.Ts)
 
-    // The * projection of the table
+    // 全ての列を含むレコードとモデルのマッピング
     def * = (
       id.?, hashed, salt, updatedAt, createdAt,
     ) <> (
-      /* The bidirectional mappings : Tuple(table) => Model */
+      // Tuple => Model のマッピング
       (UserPassword.apply _).tupled,
-      /* The bidirectional mappings : Model => Tuple(table) */
+      // Model => Tuple のマッピング
       (v: TableElementType) => UserPassword.unapply(v).map(_.copy(
         _4 = LocalDateTime.now
       ))

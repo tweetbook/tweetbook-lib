@@ -10,6 +10,9 @@ case class UserPasswordRepository[P <: JdbcProfile]()(implicit val driver: P)
     with db.SlickResourceProvider[P] {
   import api._
 
+  /*
+   * ユーザーIDを元に該当するパスワード情報を取得する
+   */
   def get(id: Id): Future[Option[EntityEmbeddedId]] =
     RunDBAction(UserPasswordTable, "slave") { query =>
       query
@@ -18,6 +21,9 @@ case class UserPasswordRepository[P <: JdbcProfile]()(implicit val driver: P)
         .headOption
     }
 
+  /*
+   * パスワード情報を更新する
+   */
   def update(password: EntityEmbeddedId): Future[Option[EntityEmbeddedId]] =
     RunDBAction(UserPasswordTable) { query =>
       val row = query.filter(_.id === password.id)
@@ -30,6 +36,9 @@ case class UserPasswordRepository[P <: JdbcProfile]()(implicit val driver: P)
       } yield old
     }
 
+  /*
+   * ユーザーIDを元に該当するパスワード情報を削除する
+   */
   def remove(id: Id): Future[Option[EntityEmbeddedId]] =
     RunDBAction(UserPasswordTable) { query =>
       val row = query.filter(_.id === id)
@@ -42,7 +51,7 @@ case class UserPasswordRepository[P <: JdbcProfile]()(implicit val driver: P)
       } yield old
     }
 
-  @deprecated("use update method", "0.1.0")
+  @deprecated("use update method", "0.1.0") // 既存のユーザーIDを介して作成、更新するため
   def add(passwd: EntityWithNoId): Future[Id] =
     Future.failed(new UnsupportedOperationException)
 }

@@ -10,6 +10,9 @@ case class TweetRepository[P <: JdbcProfile]()(implicit val driver: P)
     with db.SlickResourceProvider[P] {
   import api._
 
+  /*
+   * ツイートIDから該当するツイートを取得する
+   */
   def get(id: Id): Future[Option[EntityEmbeddedId]] =
     RunDBAction(TweetTable, "slave") { query =>
       query
@@ -18,6 +21,9 @@ case class TweetRepository[P <: JdbcProfile]()(implicit val driver: P)
         .headOption
     }
 
+  /*
+   * ツイートしたユーザーのIDを元に該当するツイートを取得する
+   */
   def filterByUserId(userId: User.Id): Future[Seq[EntityEmbeddedId]] =
     RunDBAction(TweetTable, "slave") { query =>
       query
@@ -25,6 +31,9 @@ case class TweetRepository[P <: JdbcProfile]()(implicit val driver: P)
         .result
     }
 
+  /*
+   * 複数のツイートしたユーザーのIDを元に該当するツイートを取得する
+   */
   def filterByUserIds(userIds: Traversable[User.Id]): Future[Seq[EntityEmbeddedId]] =
     RunDBAction(TweetTable, "slave") { query =>
       query
@@ -32,6 +41,9 @@ case class TweetRepository[P <: JdbcProfile]()(implicit val driver: P)
         .result
     }
 
+  /*
+   * ツイートを追加する
+   */
   def add(entity: EntityWithNoId): Future[Id] =
     RunDBAction(TweetTable) { query =>
       query
@@ -39,6 +51,9 @@ case class TweetRepository[P <: JdbcProfile]()(implicit val driver: P)
         .+=(entity.v)
     }
 
+  /*
+   * ツイートを更新する
+   */
   def update(entity: EntityEmbeddedId): Future[Option[EntityEmbeddedId]] =
     RunDBAction(TweetTable) { query =>
       val row = query.filter(_.id === entity.id)
@@ -51,6 +66,9 @@ case class TweetRepository[P <: JdbcProfile]()(implicit val driver: P)
       } yield old
     }
 
+  /*
+   * ツイートIDを元に該当するツイートを削除する
+   */
   def remove(id: Id): Future[Option[EntityEmbeddedId]] =
     RunDBAction(TweetTable) { query =>
       val row = query.filter(_.id === id)

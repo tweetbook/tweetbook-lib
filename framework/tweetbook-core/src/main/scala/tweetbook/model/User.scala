@@ -13,8 +13,8 @@ case class User(
   email:       String,                // Emailアドレス
   description: Option[String] = None, // プロフィール文
   iconUrl:     Option[String] = None, // ユーザーのアイコンのURL
-  updatedAt:   LocalDateTime = NOW,     // 最終更新日時
-  createdAt:   LocalDateTime = NOW      // 作成日時
+  updatedAt:   LocalDateTime = NOW,   // 最終更新日時
+  createdAt:   LocalDateTime = NOW    // 作成日時
 ) extends EntityModel[Id]
 
 /*

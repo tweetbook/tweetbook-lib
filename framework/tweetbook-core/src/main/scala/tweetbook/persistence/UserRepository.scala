@@ -10,6 +10,9 @@ case class UserRepository[P <: JdbcProfile]()(implicit val driver: P)
     with db.SlickResourceProvider[P] {
   import api._
 
+  /*
+   * ユーザーIDから該当するユーザー情報を取得する
+   */
   def get(id: Id): Future[Option[EntityEmbeddedId]] =
     RunDBAction(UserTable, "slave") { query =>
       query
@@ -19,7 +22,7 @@ case class UserRepository[P <: JdbcProfile]()(implicit val driver: P)
     }
 
   /*
-   * メールアドレスからユーザ情報を取得する
+   * メールアドレスから該当するユーザ情報を取得する
    */
   def findByEmail(email: String): Future[Option[EntityEmbeddedId]] =
     RunDBAction(UserTable, "slave") { query =>
@@ -29,6 +32,9 @@ case class UserRepository[P <: JdbcProfile]()(implicit val driver: P)
         .headOption
     }
 
+  /*
+   * 複数のユーザーIDから該当するユーザー情報を取得する
+   */
   def filterByIds(ids: Traversable[User.Id]): Future[Seq[EntityEmbeddedId]] =
     RunDBAction(UserTable, "slave") { query =>
       query
@@ -37,6 +43,9 @@ case class UserRepository[P <: JdbcProfile]()(implicit val driver: P)
     }
 
 
+  /*
+   * ユーザー情報を追加する
+   */
   def add(entity: EntityWithNoId): Future[Id] =
     RunDBAction(UserTable) { query =>
       query
@@ -44,6 +53,9 @@ case class UserRepository[P <: JdbcProfile]()(implicit val driver: P)
         .+=(entity.v)
     }
 
+  /*
+   * ユーザー情報を更新する
+   */
   def update(entity: EntityEmbeddedId): Future[Option[EntityEmbeddedId]] =
     RunDBAction(UserTable) { query =>
       val row = query.filter(_.id === entity.id)
@@ -56,6 +68,9 @@ case class UserRepository[P <: JdbcProfile]()(implicit val driver: P)
       } yield old
     }
 
+  /*
+   * ユーザーIDから該当するユーザー情報を削除する
+   */
   def remove(id: Id): Future[Option[EntityEmbeddedId]] =
     RunDBAction(UserTable) { query =>
       val row = query.filter(_.id === id)
