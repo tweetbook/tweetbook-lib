@@ -25,11 +25,11 @@ case class UserPasswordTable[P <: JdbcProfile]()(implicit val driver: P)
   lazy val query = new Query
 
   // テーブル定義 -----------------------------------------------------
-  class Table(tag: Tag) extends BasicTable(tag, "tweet") {
+  class Table(tag: Tag) extends BasicTable(tag, "user_password") {
 
     /* @1 */ def id        = column[User.Id]      ("id",         O.UInt16, O.PrimaryKey)
     /* @2 */ def hashed    = column[String]       ("hashed",     O.AsciiChar255)
-    /* @3 */ def salt      = column[String]       ("content",    O.AsciiChar32)
+    /* @3 */ def salt      = column[String]       ("salt",       O.AsciiChar32)
     /* @4 */ def updatedAt = column[LocalDateTime]("updated_at", O.TsCurrent)
     /* @5 */ def createdAt = column[LocalDateTime]("created_at", O.Ts)
 
