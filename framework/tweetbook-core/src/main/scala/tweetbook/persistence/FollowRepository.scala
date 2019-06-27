@@ -34,37 +34,40 @@ case class FollowRepository[P <: JdbcProfile]()(implicit val driver: P)
   /*
    * フォロー関係を追加する
    */
-  def add(entity: EntityWithNoId): Future[Id] = RunDBAction(FollowTable) { query =>
-    query
-      .returning(query.map(_.id))
-      .+=(entity.v)
-  }
+  def add(entity: EntityWithNoId): Future[Id] =
+    RunDBAction(FollowTable) { query =>
+      query
+        .returning(query.map(_.id))
+        .+=(entity.v)
+    }
 
   /*
    * フォロー関係を更新する
    */
-  def update(entity: EntityEmbeddedId): Future[Option[EntityEmbeddedId]] = RunDBAction(FollowTable) { query =>
-    val row = query.filter(_.id === entity.id)
-    for {
-      old <- row.result.headOption
-      _   <- old match {
-        case None    => DBIO.successful(0)
-        case Some(_) => row.update(entity.v)
-      }
-    } yield old
-  }
+  def update(entity: EntityEmbeddedId): Future[Option[EntityEmbeddedId]] =
+    RunDBAction(FollowTable) { query =>
+      val row = query.filter(_.id === entity.id)
+      for {
+        old <- row.result.headOption
+        _   <- old match {
+          case None    => DBIO.successful(0)
+          case Some(_) => row.update(entity.v)
+        }
+      } yield old
+    }
 
   /*
    * フォローIDから該当するフォロー関係を削除する
    */
-  def remove(id: Id): Future[Option[EntityEmbeddedId]] = RunDBAction(FollowTable) { query =>
-    val row = query.filter(_.id === id)
-    for {
-      old <- row.result.headOption
-      _   <- old match {
-        case None    => DBIO.successful(0)
-        case Some(_) => row.delete
-      }
-    } yield old
-  }
+  def remove(id: Id): Future[Option[EntityEmbeddedId]] =
+    RunDBAction(FollowTable) { query =>
+      val row = query.filter(_.id === id)
+      for {
+        old <- row.result.headOption
+        _   <- old match {
+          case None    => DBIO.successful(0)
+          case Some(_) => row.delete
+        }
+      } yield old
+    }
 }
