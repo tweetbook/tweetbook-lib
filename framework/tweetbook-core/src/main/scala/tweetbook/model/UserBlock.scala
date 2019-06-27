@@ -8,11 +8,11 @@ import ixias.model._
  */
 import UserBlock._
 case class UserBlock(
-  id:        Option[Id],          // ID
-  from:      User.Id,             // ブロックしたユーザーID
-  to:        User.Id,             // ブロックされたユーザーID
-  updatedAt: LocalDateTime = NOW, // 最終更新日時
-  createdAt: LocalDateTime = NOW  // 作成日時
+  id:             Option[Id],          // ID
+  blockingUserId: User.Id,             // ブロックしているユーザーID
+  blockedUserId:  User.Id,             // ブロックされているユーザーID
+  updatedAt:      LocalDateTime = NOW, // 最終更新日時
+  createdAt:      LocalDateTime = NOW  // 作成日時
 ) extends EntityModel[Id]
 
 /*

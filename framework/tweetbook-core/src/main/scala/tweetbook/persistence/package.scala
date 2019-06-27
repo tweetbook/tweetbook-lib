@@ -12,5 +12,6 @@ package object persistence {
     object UserPasswordRepository      extends UserPasswordRepository
     object TweetRepository             extends TweetRepository
     object FollowRepository            extends FollowRepository
+    object UserBlockRepository         extends UserBlockRepository
   }
 }

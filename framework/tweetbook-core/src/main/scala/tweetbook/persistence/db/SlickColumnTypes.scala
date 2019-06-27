@@ -15,4 +15,5 @@ trait SlickColumnTypes[P <: JdbcProfile] {
   implicit val mappingOfFollowId = MappedColumnType.base[Follow.Id, Long](id => id, Follow.Id(_))
   implicit val mappingOfFavoriteId = MappedColumnType.base[Favorite.Id, Long](id => id, Favorite.Id(_))
   implicit val mappingOfTweetId = MappedColumnType.base[Tweet.Id, Long](id => id, Tweet.Id(_))
+  implicit val mappingOfUserBlockId = MappedColumnType.base[UserBlock.Id, Long](id => id, UserBlock.Id(_))
 }

@@ -3,50 +3,39 @@ package tweetbook.persistence
 import scala.concurrent.Future
 import slick.jdbc.JdbcProfile
 import ixias.persistence.SlickRepository
-import tweetbook.model.{Follow, User}
+import tweetbook.model.UserBlock
 
-case class FollowRepository[P <: JdbcProfile]()(implicit val driver: P)
-    extends SlickRepository[Follow.Id, Follow, P]
+case class UserBlockRepository[P <: JdbcProfile]()(implicit val driver: P)
+    extends SlickRepository[UserBlock.Id, UserBlock, P]
     with db.SlickResourceProvider[P] {
   import api._
 
   /*
-   * フォローIDから該当するフォロー関係を取得する
+   * ユーザーブロックIDから該当するユーザーブロック関係を取得する
    */
-  def get(id: Id): Future[Option[EntityEmbeddedId]] =
-    RunDBAction(FollowTable, "slave") { query =>
-      query
-        .filter(_.id === id)
-        .result
-        .headOption
-    }
-
-  /*
-   * "フォローしているユーザーID" を元にフォロー関係を取得
-   */
-  def filterByFollowerId(userId: User.Id): Future[Seq[EntityEmbeddedId]] =
-    RunDBAction(FollowTable, "slave") { query =>
-      query
-        .filter(_.followerId === userId)
-        .result
-    }
+  def get(id: Id): Future[Option[EntityEmbeddedId]] = RunDBAction(UserBlockTable, "slave") { query =>
+    query
+      .filter(_.id === id)
+      .result
+      .headOption
+  }
 
 
   /*
-   * フォロー関係を追加する
+   * ユーザーブロック関係を追加する
    */
   def add(entity: EntityWithNoId): Future[Id] =
-    RunDBAction(FollowTable) { query =>
+    RunDBAction(UserBlockTable) { query =>
       query
         .returning(query.map(_.id))
         .+=(entity.v)
     }
 
   /*
-   * フォロー関係を更新する
+   * ユーザーブロック関係を更新する
    */
   def update(entity: EntityEmbeddedId): Future[Option[EntityEmbeddedId]] =
-    RunDBAction(FollowTable) { query =>
+    RunDBAction(UserBlockTable) { query =>
       val row = query.filter(_.id === entity.id)
       for {
         old <- row.result.headOption
@@ -58,10 +47,10 @@ case class FollowRepository[P <: JdbcProfile]()(implicit val driver: P)
     }
 
   /*
-   * フォローIDから該当するフォロー関係を削除する
+   * ユーザーブロックIDから該当するユーザーブロック関係を削除する
    */
   def remove(id: Id): Future[Option[EntityEmbeddedId]] =
-    RunDBAction(FollowTable) { query =>
+    RunDBAction(UserBlockTable) { query =>
       val row = query.filter(_.id === id)
       for {
         old <- row.result.headOption

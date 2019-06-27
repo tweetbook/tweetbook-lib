@@ -13,13 +13,15 @@ trait SlickResourceProvider[P <: JdbcProfile] extends SlickColumnTypes[P] {
   object FavoriteTable             extends FavoriteTable
   object TweetTable                extends TweetTable
   object UserPasswordTable         extends UserPasswordTable
+  object UserBlockTable            extends UserBlockTable
 
   lazy val AllTables = Seq(
     UserTable,
     FollowTable,
     FavoriteTable,
     TweetTable,
-    UserPasswordTable
+    UserPasswordTable,
+    UserBlockTable
   )
 }
 
